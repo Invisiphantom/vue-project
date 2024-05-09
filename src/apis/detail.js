@@ -1,6 +1,11 @@
 import http from "@/utils/http"
 
 // 根据id获得商品详情
+// id name mainPictures price {categories}
+// salesCount commentCount collectCount brand
+// desc oldPrice price
+// {skus} {specs}
+// details:{properties, pictures}
 export function getDetail(id) {
   return http.get('/goods', { params: { id } })
 }
