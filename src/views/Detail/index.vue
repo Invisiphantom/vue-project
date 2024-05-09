@@ -8,6 +8,7 @@ const route = useRoute()
 const getGoods = async () => {
   const res = await getDetail(route.params.id)
   goods.value = res.result
+  console.log(goods.value)
 }
 onMounted(() => getGoods())
 
@@ -135,13 +136,13 @@ const addCart = () => {
                 <div class="goods-detail">
                   <!-- 属性 -->
                   <ul class="attrs">
-                    <li v-for="item in goods.details.properties" :key="item.value">
+                    <li v-for="item in goods['details.properties']" :key="item.value">
                       <span class="dt">{{ item.name }}</span>
                       <span class="dd">{{ item.value }}</span>
                     </li>
                   </ul>
                   <!-- 图片 -->
-                  <img v-for="img in goods.details.pictures" v-img-lazy="img" :key="img">
+                  <img v-for="img in goods['details.pictures']" v-img-lazy="img" :key="img">
                 </div>
               </div>
             </div>

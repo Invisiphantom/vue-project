@@ -1,3 +1,4 @@
+import http_ from "@/utils/express"
 import http from "@/utils/http"
 
 // 根据id获得商品详情
@@ -7,7 +8,7 @@ import http from "@/utils/http"
 // {skus} {specs}
 // details:{properties, pictures}
 export function getDetail(id) {
-  return http.get('/goods', { params: { id } })
+  return http_.get('/goods', { params: { id } })
 }
 
 /**

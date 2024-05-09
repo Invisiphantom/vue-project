@@ -1,9 +1,20 @@
 <script setup>
+import { getTopCategoryAPI } from "@/apis/category"
 import { useBanner } from "@/views/Category/composables/useBanner"
-import { useCategory } from "@/views/Category/composables/useCategory"
 
-//面包屑
-const { categoryData } = useCategory()
+const categoryData = ref({})
+const route = useRoute()
+const getCategory = async () => {
+  // 如何在setup中获取路由参数 useRoute() -> route 等价于this.$route
+  //console.log(route.params.id);
+  const res = await getTopCategoryAPI(route.params.id)
+  categoryData.value = res.result
+}
+onMounted(()=>getCategory())
+watch(() => route.params.id, () => {
+  getCategory()
+})
+
 //轮播图
 const { bannerList } = useBanner()
 </script>
@@ -44,7 +55,7 @@ const { bannerList } = useBanner()
           <h3>- {{ item.name }}-</h3>
         </div>
         <div class="body">
-          <GoodsItem v-for="good in item.goods" :good="good" :key="good.id" />
+          <GoodsItem v-for="good in item.goods.slice(0,5)" :good="good" :key="good.id" />
         </div>
       </div>
     </div>
