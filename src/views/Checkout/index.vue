@@ -13,6 +13,7 @@ const getCheckInfo = async () => {
 onMounted(() => getCheckInfo())
 
 const showDialog = ref(false)
+const showAddDialog = ref(false)
 
 // 切换地址
 const activeAddress = ref({})
@@ -72,7 +73,7 @@ const createOrder = async () => {
             </div>
             <div class="action">
               <el-button size="large" @click="showDialog = true">切换地址</el-button>
-              <el-button size="large" @click="">添加地址</el-button>
+              <el-button size="large" @click="showAddDialog = true">添加地址</el-button>
             </div>
           </div>
         </div>
@@ -173,6 +174,30 @@ const createOrder = async () => {
   </el-dialog>
 
   <!-- 添加地址 -->
+  <el-dialog v-model="showAddDialog" title="添加收货地址" width="40%" center>
+    <div class="addressWrapper">
+
+      <el-form label-position="right" label-width="100px" status-icon>
+              <el-form-item label="收货人">
+                <el-input />
+              </el-form-item>
+              <el-form-item label="联系方式">
+                <el-input />
+              </el-form-item>
+              <el-form-item label="收货地址">
+                <el-input />
+              </el-form-item>
+            </el-form>
+
+    </div>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="showAddDialog = false">取消</el-button>
+        <el-button type="primary" @click="showAddDialog = false">确定</el-button>
+      </span>
+    </template>
+  </el-dialog>
+
 
 </template>
 
