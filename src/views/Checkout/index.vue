@@ -1,5 +1,5 @@
 <script setup>
-import { getCheckInfoAPI } from '@/apis/checkout'
+import { getCheckInfoAPI, addCheckAddressAPI } from '@/apis/checkout'
 
 // 获取结算信息
 const checkInfo = ref({}) // 订单对象
@@ -21,33 +21,49 @@ const switchAddress = (item) => {
   activeAddress.value = item
 }
 
+const form = ref({
+  receiver: '',
+  contact: '',
+  fullLocation: '',
+  address: ''
+})
+
 // 确认切换地址
 const confirm = () => {
   curAddress.value = activeAddress.value
   showDialog.value = false
 }
 
-
+// 确认添加地址
+const confirmAdd = async () => {
+  showAddDialog.value = false
+  await addCheckAddressAPI(form.value)
+  getCheckInfo()
+  ElMessage({
+    type: 'success',
+    message: '地址添加成功'
+  })
+}
 
 import { createOrderAPI } from '@/apis/checkout'
 import router from "@/router"
 
 // 创建订单
 const createOrder = async () => {
-  const res = await createOrderAPI({
-    deliveryTimeType: 1,
-    payType: 1,
-    payChannel: 1,
-    buyerMessage: '',
-    goods: checkInfo.value.goods.map(item => {
-      return {
-        skuId: item.skuId,
-        count: item.count
-      }
-    }),
-    addressId: curAddress.value.id
-  })
-  const orderId = res.result.id
+  // const res = await createOrderAPI({
+  //   deliveryTimeType: 1,
+  //   payType: 1,
+  //   payChannel: 1,
+  //   buyerMessage: '',
+  //   goods: checkInfo.value.goods.map(item => {
+  //     return {
+  //       skuId: item.skuId,
+  //       count: item.count
+  //     }
+  //   }),
+  //   addressId: curAddress.value.id
+  // })
+  const orderId = 1
   router.push({
     path: '/pay',
     query: { id: orderId }
@@ -104,7 +120,6 @@ const createOrder = async () => {
                 <td>&yen;{{ i.price }}</td>
                 <td>{{ i.count }}</td>
                 <td>&yen;{{ i.totalPrice }}</td>
-                <td>&yen;{{ i.totalPayPrice }}</td>
               </tr>
             </tbody>
           </table>
@@ -174,26 +189,27 @@ const createOrder = async () => {
   </el-dialog>
 
   <!-- 添加地址 -->
-  <el-dialog v-model="showAddDialog" title="添加收货地址" width="40%" center>
+  <el-dialog v-model="showAddDialog" title="添加收货地址" width="28%" center>
     <div class="addressWrapper">
-
       <el-form label-position="right" label-width="100px" status-icon>
-              <el-form-item label="收货人">
-                <el-input />
-              </el-form-item>
-              <el-form-item label="联系方式">
-                <el-input />
-              </el-form-item>
-              <el-form-item label="收货地址">
-                <el-input />
-              </el-form-item>
-            </el-form>
-
+        <el-form-item label="收货人">
+          <el-input placeholder="请填写收货人姓名" v-model="form.receiver" />
+        </el-form-item>
+        <el-form-item label="联系方式">
+          <el-input placeholder="+86 请填写收货人手机号" v-model="form.contact" />
+        </el-form-item>
+        <el-form-item label="所在地区">
+          <el-input placeholder="省市区县、乡镇等" v-model="form.fullLocation" />
+        </el-form-item>
+        <el-form-item label="详细地址">
+          <el-input placeholder="街道、楼牌号等" v-model="form.address" />
+        </el-form-item>
+      </el-form>
     </div>
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="showAddDialog = false">取消</el-button>
-        <el-button type="primary" @click="showAddDialog = false">确定</el-button>
+        <el-button type="primary" @click="confirmAdd">确定</el-button>
       </span>
     </template>
   </el-dialog>

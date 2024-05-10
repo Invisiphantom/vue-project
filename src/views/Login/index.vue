@@ -33,10 +33,8 @@ const userStore = useUserStore();
 const doLogin = () => {
   formRef.value.validate(async (valid) => {
     if (valid) {
-      //console.log(form.value)
       const {account, password} = form.value
       const res = await userStore.getUserInfo({account, password});
-      //console.log(res)
       ElMessage({type: 'success', message: '登录成功'})
       router.replace({path: '/'})
     }

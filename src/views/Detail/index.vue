@@ -29,7 +29,7 @@ const addCart = () => {
   // 规格已经选好
   if (skuObj.skuId) {
     cartStore.addCart({
-      id: goods.value.id,
+      goodsId: goods.value.id,
       name: goods.value.name,
       picture: goods.value.mainPictures[0],
       price: goods.value.price,

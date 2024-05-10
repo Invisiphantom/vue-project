@@ -15,7 +15,7 @@ const getPayInfo = async () => {
   console.log(payInfo.value.countdown)
   start(payInfo.value.countdown)
 }
-onMounted(() => getPayInfo())
+// onMounted(() => getPayInfo())
 
 // 支付地址
 const baseURL = 'http://pcapi-xiaotuxian-front-devtest.itheima.net/'
@@ -37,7 +37,7 @@ const payUrl = `${baseURL}pay/aliPay?orderId=${route.query.id}&redirect=${redire
         </div>
         <div class="amount">
           <span>应付总额：</span>
-          <span>¥{{ payInfo.payMoney?.toFixed(2) }}</span>
+          <span>¥{{ 172 }}</span>
         </div>
       </div>
       <!-- 付款方式 -->
