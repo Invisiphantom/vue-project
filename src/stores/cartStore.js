@@ -27,7 +27,7 @@ export const useCartStore = defineStore('cart', () => {
 
   const delCart = async (skuId) => {
     if (isLogin.value) {
-      await delCartAPI([skuId])
+      await delCartAPI(skuId)
       updateLoginCartList()
     } else {
       const idx = cartList.value.findIndex((item) => skuId === item.skuId)

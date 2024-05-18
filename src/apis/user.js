@@ -6,7 +6,12 @@ import http from "@/utils/http"
 // mobile email token
 // nickname avatar gender birthday
 export function loginAPI(user) {
-    return http_.post('/login', user)
+    return http_.get('/login_form', {
+        params: {
+            account: user.account,
+            password: user.password
+        }
+    })
 }
 
 // 获取用户可能喜欢的商品列表

@@ -13,20 +13,20 @@ export const useUserStore = defineStore('user', () => {
     const res = await loginAPI(user)
     userInfo.value = res.result
     // 将未登录状态下的购物车列表合并到登录状态下
-    await mergeCartAPI(cartStore.cartList.map(item => {
-      return {
-        goodsId: item.goodsId,
-        name: item.name,
-        picture: item.picture,
-        price: item.price,
-        count: item.count,
-        skuId: item.skuId,
-        attrsText: item.attrsText,
-        selected: item.selected,
-        specs: item.specs,
-        postFee: item.postFee,
-      }
-    }))
+    // await mergeCartAPI(cartStore.cartList.map(item => {
+    //   return {
+    //     goodsId: item.goodsId,
+    //     name: item.name,
+    //     picture: item.picture,
+    //     price: item.price,
+    //     count: item.count,
+    //     skuId: item.skuId,
+    //     attrsText: item.attrsText,
+    //     selected: item.selected,
+    //     specs: item.specs,
+    //     postFee: item.postFee,
+    //   }
+    // }))
     // 更新购物车列表
     cartStore.updateLoginCartList()
   }
